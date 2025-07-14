@@ -113,7 +113,7 @@ export function Hero() {
       >
         <div className="rounded-[24px] border border-neutral-200 bg-white p-2 dark:border-neutral-700 dark:bg-black">
           <Image
-            src="https://assets.aceternity.com/pro/dashboard-new.webp"
+            src="/banger.webp"
             alt="header"
             width={1920}
             height={1080}

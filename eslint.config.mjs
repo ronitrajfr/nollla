@@ -22,6 +22,7 @@ const eslintConfig = [
       "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
       "react/no-unescaped-entities": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
     },
   },
 ];
