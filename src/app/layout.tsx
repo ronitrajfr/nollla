@@ -14,18 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ayoni - Home",
-  description:
-    "Open-source web analytics built for modern websites — simple, fast, and easy to use. ",
+  title: "Nollla",
+  description: "create stunning thumbnails without any friction . ",
   openGraph: {
-    images: ["/ogayoni.png"],
+    images: ["/coverimage.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ayoni - Home",
-    description:
-      " Open-source web analytics built for modern websites — simple, fast, and easy to use.",
-    images: ["/ogayoni.png"],
+    title: "Nollla",
+    description: "create stunning thumbnails without any friction ",
+    images: ["/coverimage.png"],
     creator: "@ronitrajfr",
   },
   icons: [{ rel: "icon", url: "/logo.svg" }],
