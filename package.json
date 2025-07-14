@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -44,8 +44,10 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.525.0",
+    "motion": "^12.23.3",
     "next": "15.3.5",
     "next-themes": "^0.4.6",
+    "onnxruntime-web": "1.21.0-dev.20250206-d981b153d3",
     "react": "^19.0.0",
     "react-day-picker": "^9.8.0",
     "react-dom": "^19.0.0",
@@ -55,7 +57,8 @@
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "zod": "^4.0.5"
+    "zod": "^4.0.5",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
