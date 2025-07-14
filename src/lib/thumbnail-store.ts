@@ -16,37 +16,6 @@ import {
 } from "./thumbnail-editor";
 import { exportImage } from "./canvas-export";
 
-const removeBackgroundNonBlocking = async (
-  imageUrl: string,
-  onProgress?: (progress: number, stage: string) => void
-): Promise<Blob> => {
-  // Yield control to allow UI updates
-  await new Promise(resolve => requestAnimationFrame(resolve));
-  
-  onProgress?.(10, 'Initializing...');
-  await new Promise(resolve => setTimeout(resolve, 50));
-  
-  onProgress?.(30, 'Loading model...');
-  await new Promise(resolve => setTimeout(resolve, 50));
-  
-  try {
-    onProgress?.(50, 'Processing image...');
-    
-    // Use the library's built-in progress callback if available
-    const result = await removeBackground(imageUrl, {
-      progress: (key: string, current: number, total: number) => {
-        const progress = Math.min(50 + (current / total) * 40, 90);
-        onProgress?.(progress, `Processing: ${key}`);
-      }
-    });
-    
-    onProgress?.(100, 'Complete!');
-    return result;
-  } catch (error) {
-    throw error;
-  }
-};
-
 interface ThumbnailStore {
   // State
   originalImage: string | null;
@@ -143,10 +112,13 @@ export const useThumbnailStore = create<ThumbnailStore>((set, get) => ({
     });
     
     try {
-      const imageBlob = await removeBackgroundNonBlocking(
+      const imageBlob = await removeBackground(
         imageUrl,
-        (progress: number, stage: string) => {
-          set({ processingProgress: progress, processingStage: stage });
+        {
+          progress: (key: string, current: number, total: number) => {
+            const progress = Math.min(50 + (current / total) * 40, 90);
+            set({ processingProgress: progress, processingStage: `Processing: ${key}` });
+          }
         }
       );
       const processedUrl = URL.createObjectURL(imageBlob);
