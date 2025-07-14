@@ -1,72 +1,45 @@
-"use client";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Github } from "lucide-react";
 
-import { useRef, useEffect } from "react";
-import { useThumbnailStore } from "@/lib/thumbnail-store";
-import { loadGoogleFonts } from "@/lib/font-loader";
-import { UploadArea } from "@/components/thumbnail-editor/upload-area";
-import { PreviewPanel } from "@/components/thumbnail-editor/preview-panel";
-import { ControlsPanel } from "@/components/thumbnail-editor/controls-panel";
-
-export default function ThumbnailEditor() {
-  const { 
-    originalImage, 
-    textElements, 
-    handleImageUpload, 
-    exportThumbnail 
-  } = useThumbnailStore();
-  
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    loadGoogleFonts(textElements);
-  }, [textElements]);
-
-  const handleExport = async () => {
-    if (!canvasRef.current) return;
-    await exportThumbnail(canvasRef.current);
-  };
-
+export default function HeroSection() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto p-6">
-        <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-            Thumbnail Editor
-          </h1>
-          <p className="text-gray-600">
-            Create stunning thumbnails with AI-powered background removal
-          </p>
+    <section className="min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-gradient-to-b from-background to-muted/20">
+      <div className="max-w-4xl mx-auto text-center space-y-8">
+        {/* New Badge */}
+        <div className="flex justify-center">
+          <Badge className="px-3 py-1 text-sm font-medium">
+            New Design is out now!
+          </Badge>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            {!originalImage ? (
-              <UploadArea />
-            ) : (
-              <PreviewPanel onExport={handleExport} />
-            )}
-          </div>
+        {/* Main Headline */}
+        <div className="space-y-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+            Experience
+            <br />
+            the <span className="text-brand-purple">Shadcn</span> landing page
+          </h1>
+        </div>
 
-          <div>
-            <ControlsPanel 
-              onSubjectUpload={() => fileInputRef.current?.click()}
-            />
-          </div>
+        {/* Subtitle */}
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          We're more than just a tool, we're a community of passionate creators.
+          Get access to exclusive resources, tutorials, and support.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+          <Button size="lg" className="min-w-40">
+            Get Started
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+          <Button size="lg" className="min-w-40">
+            <Github className="w-4 h-4" />
+            Github repository
+          </Button>
         </div>
       </div>
-      
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) handleImageUpload(file);
-        }}
-        className="hidden"
-      />
-      <canvas ref={canvasRef} className="hidden" />
-    </div>
+    </section>
   );
 }

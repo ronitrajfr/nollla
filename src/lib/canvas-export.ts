@@ -1,11 +1,15 @@
-import type { 
-  TextElement, 
-  BorderSettings, 
+import type {
+  TextElement,
+  BorderSettings,
   AspectRatioType,
   SubjectSettings,
-  BackgroundSettings 
+  BackgroundSettings,
 } from "./thumbnail-editor";
-import { getCanvasDimensions, getPreviewStyle, getCurrentBackground } from "./thumbnail-editor";
+import {
+  getCanvasDimensions,
+  getPreviewStyle,
+  getCurrentBackground,
+} from "./thumbnail-editor";
 import { waitForFontsReady } from "./font-loader";
 
 export interface ExportOptions {
@@ -43,7 +47,7 @@ export const exportImage = async (options: ExportOptions) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   const currentBg = getCurrentBackground(backgroundSettings, originalImage);
-  
+
   if (currentBg) {
     await drawBackground(ctx, currentBg, canvas, backgroundColor);
   } else {
@@ -51,9 +55,26 @@ export const exportImage = async (options: ExportOptions) => {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  drawTextElements(ctx, textElements.filter(el => el.behind), canvas, aspectRatio);
-  await drawSubject(ctx, processedImage, canvas, subjectSettings, borderSettings, aspectRatio);
-  drawTextElements(ctx, textElements.filter(el => !el.behind), canvas, aspectRatio);
+  drawTextElements(
+    ctx,
+    textElements.filter((el) => el.behind),
+    canvas,
+    aspectRatio
+  );
+  await drawSubject(
+    ctx,
+    processedImage,
+    canvas,
+    subjectSettings,
+    borderSettings,
+    aspectRatio
+  );
+  drawTextElements(
+    ctx,
+    textElements.filter((el) => !el.behind),
+    canvas,
+    aspectRatio
+  );
 
   triggerDownload(canvas, aspectRatio);
 };
@@ -107,7 +128,7 @@ const drawSubject = (
 ): Promise<void> => {
   return new Promise(async (resolve) => {
     await waitForFontsReady();
-    
+
     const img = new window.Image();
     img.crossOrigin = "anonymous";
     img.onload = () => {
@@ -115,15 +136,15 @@ const drawSubject = (
       const baseSize = 400;
       const previewStyle = getPreviewStyle(aspectRatio); // Use actual aspect ratio
       const canvasScale = canvas.width / previewStyle.width;
-      
+
       // Calculate scaled base size for canvas
       const scaledBaseSize = baseSize * canvasScale;
-      
+
       // Apply subject scale
       const finalScale = subjectSettings.scale / 100;
       const width = scaledBaseSize * finalScale;
       const height = scaledBaseSize * finalScale;
-      
+
       // Position calculation
       const x = (canvas.width * subjectSettings.position.x) / 100 - width / 2;
       const y = (canvas.height * subjectSettings.position.y) / 100 - height / 2;
@@ -175,7 +196,9 @@ const drawTextElements = (
 
     const previewStyle = getPreviewStyle(aspectRatio);
     const fontScale = canvas.width / previewStyle.width;
-    ctx.font = `${element.fontWeight} ${element.fontSize * fontScale}px ${element.fontFamily}`;
+    ctx.font = `${element.fontWeight} ${element.fontSize * fontScale}px ${
+      element.fontFamily
+    }`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
@@ -184,7 +207,11 @@ const drawTextElements = (
       let currentX = 0;
       const totalWidth = chars.reduce((width, char, i) => {
         const charWidth = ctx.measureText(char).width;
-        return width + charWidth + (i < chars.length - 1 ? element.letterSpacing * fontScale : 0);
+        return (
+          width +
+          charWidth +
+          (i < chars.length - 1 ? element.letterSpacing * fontScale : 0)
+        );
       }, 0);
       currentX = -totalWidth / 2;
       chars.forEach((char, i) => {
@@ -199,7 +226,10 @@ const drawTextElements = (
   });
 };
 
-const triggerDownload = (canvas: HTMLCanvasElement, aspectRatio: AspectRatioType) => {
+const triggerDownload = (
+  canvas: HTMLCanvasElement,
+  aspectRatio: AspectRatioType
+) => {
   const dataUrl = canvas.toDataURL("image/png");
   const link = document.createElement("a");
   link.download = `thumbnail-${aspectRatio.replace(":", "x")}.png`;
@@ -207,4 +237,4 @@ const triggerDownload = (canvas: HTMLCanvasElement, aspectRatio: AspectRatioType
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-}; 
+};
