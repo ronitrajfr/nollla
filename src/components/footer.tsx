@@ -20,7 +20,7 @@ export function Footer() {
         <div>
           <div className="mt-2 ml-2 text-neutral-600 dark:text-neutral-400">
             <p>
-              &copy; 2024 ThumbnailTool. Open Source & by{" "}
+              &copy; 2025 Nollla. Built by{" "}
               <Link
                 href="https://x.com/ronitrajfr"
                 target="_blank"
