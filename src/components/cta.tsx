@@ -3,8 +3,9 @@ import { cn } from "@/lib/utils";
 import { IconMessageCircleQuestion } from "@tabler/icons-react";
 import React from "react";
 import { HiArrowRight } from "react-icons/hi2";
-
+import { useRouter } from "next/navigation";
 export function CTA() {
+  const router = useRouter();
   return (
     <section className="w-full grid grid-cols-1 md:grid-cols-3 my-20 md:my-40 justify-start relative z-20 max-w-7xl mx-auto bg-gradient-to-br from-gray-100 to-white dark:from-neutral-900 dark:to-neutral-950">
       <GridLineHorizontal className="top-0" offset="200px" />
@@ -25,7 +26,12 @@ export function CTA() {
         </p>
 
         <div className="flex items-start sm:items-center flex-col sm:flex-row sm:gap-4">
-          <button className="mt-8 flex space-x-2 items-center group text-base px-4 py-2 rounded-lg bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]">
+          <button
+            onClick={() => {
+              router.push("/app");
+            }}
+            className="mt-8 flex space-x-2 cursor-pointer items-center group text-base px-4 py-2 rounded-lg bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]"
+          >
             <span>Start Designing</span>
             <HiArrowRight className="text-white group-hover:translate-x-1 stroke-[1px] h-3 w-3 mt-0.5 transition-transform duration-200" />
           </button>

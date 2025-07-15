@@ -10,8 +10,8 @@ export function Footer() {
   ];
 
   const socials = [
-    { title: "Twitter", href: "https://twitter.com/yourhandle" },
-    { title: "GitHub", href: "https://github.com/your-org/your-repo" },
+    { title: "Twitter", href: "https://x.com/ronitrajfr" },
+    { title: "GitHub", href: "https://github.com/ronitrajfr/nollla" },
   ];
 
   return (

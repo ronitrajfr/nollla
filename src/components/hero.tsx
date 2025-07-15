@@ -7,9 +7,11 @@ import Balancer from "react-wrap-balancer";
 import Link from "next/link";
 import { Button } from "./button";
 import { RainbowButton } from "./ui/rainbow-button";
+import { useRouter } from "next/navigation";
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const parentRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   return (
     <div
@@ -102,7 +104,14 @@ export function Hero() {
         transition={{ duration: 0.2, delay: 0.7 }}
         className="mb-10 mt-8 flex w-full flex-col items-center justify-center gap-4 px-8 sm:flex-row md:mb-20"
       >
-        <RainbowButton className="z-1">Create Now</RainbowButton>
+        <RainbowButton
+          onClick={() => {
+            router.push("/app");
+          }}
+          className="z-1"
+        >
+          Create Now
+        </RainbowButton>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
